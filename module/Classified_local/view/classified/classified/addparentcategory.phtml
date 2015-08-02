@@ -1,0 +1,13 @@
+<div class="parent-cat-form">
+<?php 
+$form = $this->form;
+$form->setAttribute('action', $this->url('classified',array('action' => 'addparentcategory')));
+$form->prepare();
+echo $this->form()->openTag($form);
+echo "<div>".$this->formrow($form->get('id'))."</div>";
+echo "<div>".$this->formrow($form->get('title'))."</div>";
+echo "<div>".$this->formrow($form->get('description'))."</div>";
+
+echo "<div>".$this->formrow($form->get('submit'))."</div>";
+?>
+</div>

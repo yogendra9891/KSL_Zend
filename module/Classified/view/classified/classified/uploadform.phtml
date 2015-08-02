@@ -1,0 +1,41 @@
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		$("area[rel^='prettyPhoto']").prettyPhoto();
+		$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'light_square',slideshow:3000, autoplay_slideshow: false, social_tools:false});
+    });
+</script>
+<?php 
+$i = 0;
+$full_thumbUrl = $this->basePath().'/module/Classified/src/Classified/assests/post/thumb/';
+$full_originalUrl = $this->basePath().'/module/Classified/src/Classified/assests/post/standard/';
+$form->setAttribute('action', $this->url('classified',array('action' => 'uploadform',  'id'=>$post_id)));
+$form->prepare(); // The correct enctype is set here ?>
+<?php echo $this->form()->openTag($form); ?>
+    <div class="form-element">
+        <?php $fileElement = $form->get('image-file'); ?>
+        <?php echo $this->formLabel($fileElement); ?>
+        <?php echo $this->formFile($fileElement); ?>
+        <?php echo $this->formElementErrors($fileElement); ?>
+    </div>
+<button>Submit</button>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<table class="table gallery clearfix">
+	<tr>
+	    <th>S No.</th>
+		<th>Image</th>
+		<th>&nbsp;</th>
+	</tr>
+	<?php foreach ($images_data as $image_data) : ?>
+	<tr>
+	    <td><?php echo ++$i;?></td>
+		<td><a href="<?php echo $full_originalUrl.$this->escapeHtml($image_data->image);?>" rel="prettyPhoto[gallery1]" title="">
+	   <img width="100" src="<?php echo $full_thumbUrl.$this->escapeHtml($image_data->image);?>" alt="" />
+	</a></td>
+		<td>
+		<a href="<?php echo $this->url('classified', array('action'=>'deletepostimage', 'id' => $image_data->id));?>" onclick="return confirm('Are you sure?')" >Delete</a>
+		</td>
+	</tr>
+	<?php endforeach;?>
+</table>

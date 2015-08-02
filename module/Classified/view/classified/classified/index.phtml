@@ -1,0 +1,10 @@
+<?php
+?>
+<div class="parent-cat"><a href="<?php echo $this->url('classified', array('action'=>'listparentcategory')) ?>"><?php echo $this->translate('Category'); ?></a>
+</div>
+<div class="sub-cat">
+<a href="<?php echo $this->url('classified', array('action'=>'childcategory')) ?>"><?php echo $this->translate('Sub Category'); ?></a>
+</div>
+<div class="post">
+<a href="<?php echo $this->url('classified', array('action'=>'listpost')) ?>"><?php echo $this->translate('Post'); ?></a>
+</div>

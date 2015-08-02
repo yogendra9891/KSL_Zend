@@ -1,0 +1,49 @@
+ <?php
+$i = 0;
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="addcat">
+<a href="<?php echo $this->url('classified', array('action'=>'addpost')) ?>">Add new Ad</a>
+</div>
+
+<table class="table">
+       <tr>
+       <th>S No.</th>
+       <th>Title</th>
+       <th>Description</th>
+       <th>Created date</th>
+       <th>Mofified date</th>
+       <th>Image</th>
+       <th> </th>
+       <th> </th>
+       </tr>
+       <?php foreach ($posts as $post) : ?>
+       <tr>
+           <td><?php echo ++$i;?></td>
+               <td>
+               <?php echo $this->escapeHtml($post->title);?></td>
+               <td><?php echo $this->escapeHtml($post->description);?></td>
+               <td><?php echo $this->escapeHtml($post->created_date);?></td>
+                <td><?php echo $this->escapeHtml($post->modified_date);?></td>
+                <td><a href="<?php echo $this->url('classified', array('action'=>'uploadform', 'id' => $post->id));?>">Add Image</a>
+                </td>
+               <td>
+               <a href="<?php echo $this->url('classified', array('action'=>'editpost', 'id' => $post->id));?>">Edit</a></td>
+               <td>
+               <a href="<?php echo $this->url('classified', array('action'=>'deletepost', 'id' => $post->id));?>" onclick="return confirm('Are you sure?')" >Delete</a>
+               </td>
+       </tr>
+       <?php endforeach;?>
+</table>
+ <?php
+// add at the end of the file after the table
+echo $this->paginationControl(
+// the paginator object
+$posts,
+// the scrolling style
+'Elastic',
+// the partial to use to render the control
+array('partial/paginator.phtml', 'Classified'),
+array('order_by' => '', 'order' => '', 'action'=>'listpost', 'route' => 'classified')
+);
+?>

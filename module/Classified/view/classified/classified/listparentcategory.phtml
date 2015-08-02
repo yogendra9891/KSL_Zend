@@ -1,0 +1,46 @@
+<?php
+$i = 0;
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="addcat">
+<a href="<?php echo $this->url('classified', array('action'=>'addparentcategory')) ?>">Add new Parent category</a>
+</div>
+
+<table class="table">
+       <tr>
+       <th>S No.</th>
+       <th>Title</th>
+       <th>Description</th>
+       <th>Created date</th>
+       <th>Mofified date</th>
+       <th> </th>
+       <th> </th>
+       </tr>
+       <?php foreach ($categories as $category) : ?>
+       <tr>
+           <td><?php echo ++$i;?></td>
+               <td>
+               <?php echo $this->escapeHtml($category->title);?></td>
+               <td><?php echo $this->escapeHtml($category->description);?></td>
+               <td><?php echo $this->escapeHtml($category->created_date);?></td>
+                <td><?php echo $this->escapeHtml($category->modified_date);?></td>
+               <td>
+               <a href="<?php echo $this->url('classified', array('action'=>'editparentcategory', 'id' => $category->id));?>">Edit</a></td>
+               <td>
+               <a href="<?php echo $this->url('classified', array('action'=>'deleteparentcategory', 'id' => $category->id));?>" onclick="return confirm('Are you sure?')" >Delete</a>
+               </td>
+       </tr>
+       <?php endforeach;?>
+</table>
+ <?php
+// add at the end of the file after the table
+echo $this->paginationControl(
+// the paginator object
+$categories,
+// the scrolling style
+'Elastic',
+// the partial to use to render the control
+array('partial/paginator.phtml', 'admin'),
+array('order_by' => '', 'order' => '', 'action'=>'listparentcategory', 'route' => 'classified')
+);
+?>

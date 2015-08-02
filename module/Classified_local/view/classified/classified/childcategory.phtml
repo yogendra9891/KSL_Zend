@@ -1,0 +1,65 @@
+<?php
+$url_order = 'ASC';  // the following lines
+if ($order_by == 'title')
+	$url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'createedate')
+$url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+$page = $this->request->getQuery('page');
+$query = 'page='.$page.'&order='.$url_order.'&order_by=';
+$i = 0;
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="addcat"> 
+ <a href="<?php echo $this->url('classified', array('action'=>'addchildcategory'));?>">Add new Child category</a>
+</div>
+
+<table class="table">
+	<tr>
+	<th>S No.</th>
+		<th>
+		Title
+		</th>
+		<th>
+		Parent Category
+		</th>
+		<th>
+		Description
+		</th>
+		<th>
+		Created date
+		</th>
+		<th>
+		Modified date
+		</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	<?php foreach ($child_categories as $child_category) : ?>
+	<tr>
+	    <td><?php echo ++$i;?></td>
+		<td>
+		<?php echo $this->escapeHtml($child_category->title);?></td>
+		<td><?php echo $this->escapeHtml($child_category->parent_cat);?></td>
+		<td><?php echo $this->escapeHtml($child_category->description);?></td>
+		<td><?php echo $this->escapeHtml($child_category->created_date);?></td>
+		<td><?php echo $this->escapeHtml($child_category->modified_date);?></td>
+		<td>
+		<a href="<?php echo $this->url('classified', array('action'=>'editchildcategory', 'id' => $child_category->id));?>">Edit</a></td>
+		<td>
+		<a href="<?php echo $this->url('classified', array('action'=>'deletechildcategory', 'id' => $child_category->id));?>" onclick="return confirm('Are you sure?')" >Delete</a>
+		</td>
+	</tr>
+	<?php endforeach;?>
+</table>
+<?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+ // the paginator object
+ $child_categories,
+ // the scrolling style
+ 'Elastic',
+ // the partial to use to render the control
+ array('partial/paginator.phtml', 'Classified'),
+ array('order_by' => '', 'order' => '', 'action'=>'childcategory', 'route' => 'classified')
+ );
+?>

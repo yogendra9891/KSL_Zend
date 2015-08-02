@@ -1,0 +1,55 @@
+<h1><?php echo $this->escapeHtml('Add AD'); ?></h1>
+<div class="parent-cat-form">
+<?php 
+$form = $this->form;
+$form->setAttribute('action', $this->url('classified',array('action' => 'addpost')));
+$form->prepare();
+echo $this->form()->openTag($form);
+echo "<div>".$this->formrow($form->get('id'))."</div>";
+echo "<div>".$this->formrow($form->get('title'))."</div>";
+echo "<div>".$this->formrow($form->get('short_description'))."</div>";
+echo "<div>".$this->formrow($form->get('description'))."</div>";
+echo "<div>".$this->formrow($form->get('category_id'))."</div>";
+echo "<div>".$this->formrow($form->get('sub_category_id'))."</div>";
+echo "<div>".$this->formrow($form->get('price'))."</div>";
+echo "<div>".$this->formrow($form->get('contact_email'))."</div>";
+echo "<div>".$this->formrow($form->get('contact_name'))."</div>";
+echo "<div>".$this->formrow($form->get('contact_phone_home'))."</div>";
+echo "<div>".$this->formrow($form->get('contact_phone_work'))."</div>";
+echo "<div>".$this->formrow($form->get('contact_phone_cell'))."</div>";
+echo "<div>".$this->formrow($form->get('address_1'))."</div>";
+echo "<div>".$this->formrow($form->get('address_2'))."</div>";
+echo "<div>".$this->formrow($form->get('city'))."</div>";
+echo "<div>".$this->formrow($form->get('state'))."</div>";
+echo "<div>".$this->formrow($form->get('is_featured'))."</div>";
+echo "<div>".$this->formrow($form->get('status'))."</div>";
+echo "<div>".$this->formrow($form->get('zip'))."</div>";
+
+
+echo "<div>".$this->formrow($form->get('submit'))."</div>";
+?>
+</div>
+
+<!-- Js Code strts from here -->
+<script>
+$(document).ready(function(){
+	getChildCategory();
+});
+
+function getChildCategory()
+{
+  //get selected value
+  var cat_id = $('#parentcat').val();
+  var sub_cat_id = $('#childcat').val();	
+
+  //creating ajax call to fetch subcategory
+  $.ajax({
+		type : "POST",
+		url : "getChildCategory",
+		data : {id:cat_id}
+	}).done(function(msg) {
+		// set the msg in select
+		$('#childcat').html(msg);
+	});
+}
+</script>
